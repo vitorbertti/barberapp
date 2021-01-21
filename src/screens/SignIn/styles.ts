@@ -10,6 +10,7 @@ export const Container = styled.SafwAreaView`
 
 export const InputArea = styled.View`
   padding: 40px;
+  width: 100%;
 `;
 
 export const CustomButtom = styled.TouchableOpacity`
