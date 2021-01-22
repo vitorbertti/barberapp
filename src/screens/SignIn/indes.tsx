@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {Text} from 'react-native';
+import {Alert, Text} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {
   Container,
   InputArea,
@@ -10,6 +11,8 @@ import {
   SignMessageButtomTextBold,
 } from './styles';
 
+import Api from '../../Api';
+
 import BarberLogo from '../../assets/barber.svg';
 import SignInput from '../../components/SignInput';
 import EmailIcon from '../../assets/email.svg';
@@ -18,6 +21,31 @@ import LockIcon from '../../assets/lock.svg';
 export default () => {
   const [emailField, setEmailField] = useState('');
   const [passwordField, setPasswordField] = useState('');
+
+  const navigation = useNavigation();
+
+  const handleSignClick = async () => {
+    if (emailField !== '' && passwordField !== '') {
+      let json = await Api.signIn(emailField, passwordField);
+      if(json.token) {
+        // TODO
+      }else {
+        Alert.alert('Alerta', 'E-mail e/ou senha inválidos', [], {cancelable: true});
+      }
+    } else {
+      Alert.alert('Alerta', 'Preencha os campos!', [], {cancelable: true});
+    }
+  };
+
+  const handleMessageButtonClick = () => {
+    navigation.reset({
+      routes: [
+        {
+          name: 'SignUp',
+        },
+      ],
+    });
+  };
 
   return (
     <Container>
@@ -40,12 +68,12 @@ export default () => {
           password={true}
         />
 
-        <CustomButtom>
+        <CustomButtom onPress={handleSignClick}>
           <CustomButtomText>LOGIN</CustomButtomText>
         </CustomButtom>
       </InputArea>
 
-      <SignMessageButtom>
+      <SignMessageButtom onPress={handleMessageButtonClick}>
         <SignMessageButtomText>
           Ainda não possui uma conta?
         </SignMessageButtomText>
