@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
-import {Text} from 'react-native';
+import React, {useState, useContext} from 'react';
+import {Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
+import {UserContext} from '../../contexts/UserContext';
 import {
   Container,
   InputArea,
@@ -10,6 +12,8 @@ import {
   SignMessageButtomText,
   SignMessageButtomTextBold,
 } from './styles';
+
+import Api from '../../Api';
 
 import BarberLogo from '../../assets/barber.svg';
 import SignInput from '../../components/SignInput';
@@ -22,9 +26,34 @@ export default () => {
   const [emailField, setEmailField] = useState('');
   const [passwordField, setPasswordField] = useState('');
 
+  const {dispatch: userDispatch} = useContext(UserContext);
+
   const navigation = useNavigation();
 
-  const handleSignClick = () => {};
+  const handleSignClick = async () => {
+    if (nameField !== '' && emailField !== '' && passwordField !== '') {
+      let res = await Api.signUp(nameField, emailField, passwordField);
+      if (res.token) {
+        await AsyncStorage.setItem('token', res.token);
+        userDispatch({
+          type: 'setAvatar',
+          payload: {
+            avatar: res.data.avatar,
+          },
+        });
+
+        navigation.reset({
+          routes: [{name: 'MainTab'}],
+        });
+      } else {
+        Alert.alert('Erro', res.error, [], {
+          cancelable: true,
+        });
+      }
+    } else {
+      Alert.alert('Alerta', 'Preencha os campos!', [], {cancelable: true});
+    }
+  };
 
   const handleMessageButtonClick = () => {
     navigation.reset({
