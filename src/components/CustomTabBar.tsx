@@ -19,23 +19,58 @@ const TabItem = styled.TouchableOpacity`
   align-items: center;
 `;
 
-export default () => {
+const TabItemCenter = styled.TouchableOpacity`
+  width: 70px;
+  height: 70px;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 35px;
+  border: 3px solid #4eadbe;
+  margin-top: -20px;
+`;
+
+export default ({state, navigation}) => {
+  const goTo = (screenName) => {
+    navigation.navigate(screenName);
+  };
+
   return (
     <TabArea>
-      <TabItem>
-        <HomeIcon width="24" height="24" fill="#fff" />
+      <TabItem onPress={() => goTo('Home')}>
+        <HomeIcon
+          style={{opacity: state.index === 0 ? 1 : 0.5}}
+          width="24"
+          height="24"
+          fill="#fff"
+        />
       </TabItem>
-      <TabItem>
-        <SearchIcon width="24" height="24" fill="#fff" />
+      <TabItem onPress={() => goTo('Search')}>
+        <SearchIcon
+          style={{opacity: state.index === 1 ? 1 : 0.5}}
+          width="24"
+          height="24"
+          fill="#fff"
+        />
       </TabItem>
-      <TabItem>
-        <TodayIcon width="24" height="24" fill="#fff" />
+      <TabItemCenter onPress={() => goTo('Appointments')}>
+        <TodayIcon width="32" height="32" fill="#4eadbe" />
+      </TabItemCenter>
+      <TabItem onPress={() => goTo('Favorites')}>
+        <Favorite
+          style={{opacity: state.index === 3 ? 1 : 0.5}}
+          width="24"
+          height="24"
+          fill="#fff"
+        />
       </TabItem>
-      <TabItem>
-        <Favorite width="24" height="24" fill="#fff" />
-      </TabItem>
-      <TabItem>
-        <AccountIcon width="24" height="24" fill="#fff" />
+      <TabItem onPress={() => goTo('Profile')}>
+        <AccountIcon
+          style={{opacity: state.index === 4 ? 1 : 0.5}}
+          width="24"
+          height="24"
+          fill="#fff"
+        />
       </TabItem>
     </TabArea>
   );
