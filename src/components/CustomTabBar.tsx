@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components/native';
+
+import {UserContext} from '../contexts/UserContext';
 
 import HomeIcon from '../assets/home.svg';
 import SearchIcon from '../assets/search.svg';
@@ -30,7 +32,15 @@ const TabItemCenter = styled.TouchableOpacity`
   margin-top: -20px;
 `;
 
+const AvatarIcon = styled.Image`
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+`;
+
 export default ({state, navigation}) => {
+  const {state: user} = useContext(UserContext);
+
   const goTo = (screenName) => {
     navigation.navigate(screenName);
   };
@@ -65,12 +75,16 @@ export default ({state, navigation}) => {
         />
       </TabItem>
       <TabItem onPress={() => goTo('Profile')}>
-        <AccountIcon
-          style={{opacity: state.index === 4 ? 1 : 0.5}}
-          width="24"
-          height="24"
-          fill="#fff"
-        />
+        {user.avatar != '' ? (
+          <AvatarIcon source={{uri: user.avatar}} />
+        ) : (
+          <AccountIcon
+            style={{opacity: state.index === 4 ? 1 : 0.5}}
+            width="24"
+            height="24"
+            fill="#fff"
+          />
+        )}
       </TabItem>
     </TabArea>
   );
