@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {request, PERMISSIONS} from 'react-native-permissions';
+import Geolocation from '@react-native-community/geolocation';
+import {Platform} from 'react-native';
 import {
   Container,
   Scroller,
@@ -15,7 +18,30 @@ import MyLocationIcon from '../../assets/my_location.svg';
 import {useNavigation} from '@react-navigation/native';
 
 export default () => {
+  const [locationText, setLocationText] = useState('');
   const navigation = useNavigation();
+  const [coords, setCoords] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleLocationFinder = async () => {
+    setCoords(null);
+    let result = await request(
+      Platform.OS === 'ios'
+        ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+        : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+    );
+
+    if (result === 'granted') {
+      setLoading(true);
+      setLocationText('');
+      Geolocation.getCurrentPosition((info) => {
+        setCoords(info.coords);
+        getBarbers();
+      });
+    }
+  };
+
+  const getBarbers = () => {};
 
   return (
     <Container>
@@ -33,8 +59,10 @@ export default () => {
           <LocationInput
             placeholder="Onde você está?"
             placeholderTextColor="#fff"
+            value={locationText}
+            onChangeText={(t) => setLocationText(t)}
           />
-          <LocationFinder>
+          <LocationFinder onPress={handleLocationFinder}>
             <MyLocationIcon width="24" height="24" fill="#fff" />
           </LocationFinder>
         </LocationArea>
