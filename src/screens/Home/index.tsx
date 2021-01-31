@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {request, PERMISSIONS} from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
-import {Platform} from 'react-native';
+import {Alert, Platform} from 'react-native';
 import {
   Container,
   Scroller,
@@ -11,7 +11,9 @@ import {
   LocationArea,
   LocationInput,
   LocationFinder,
+  LoadingIcon,
 } from './styles';
+import Api from '../../Api';
 
 import SearchIcon from '../../assets/search.svg';
 import MyLocationIcon from '../../assets/my_location.svg';
@@ -22,6 +24,7 @@ export default () => {
   const navigation = useNavigation();
   const [coords, setCoords] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [list, setList] = useState([]);
 
   const handleLocationFinder = async () => {
     setCoords(null);
@@ -34,6 +37,7 @@ export default () => {
     if (result === 'granted') {
       setLoading(true);
       setLocationText('');
+      setList([]);
       Geolocation.getCurrentPosition((info) => {
         setCoords(info.coords);
         getBarbers();
@@ -41,7 +45,25 @@ export default () => {
     }
   };
 
-  const getBarbers = () => {};
+  const getBarbers = async () => {
+    setLoading(true);
+    setList([]);
+    let res = await Api.getBarbers();
+    if (res.error === '') {
+      if (res.loc) {
+        setLocationText(res.loc);
+      }
+      setList(res.data);
+    } else {
+      Alert.alert('Erro', res.error, [], {cancelable: true});
+    }
+
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getBarbers();
+  }, []);
 
   return (
     <Container>
@@ -66,6 +88,8 @@ export default () => {
             <MyLocationIcon width="24" height="24" fill="#fff" />
           </LocationFinder>
         </LocationArea>
+
+        {loading && <LoadingIcon size="large" color="#fff" />}
       </Scroller>
     </Container>
   );
