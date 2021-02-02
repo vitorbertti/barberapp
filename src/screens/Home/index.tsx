@@ -12,8 +12,10 @@ import {
   LocationInput,
   LocationFinder,
   LoadingIcon,
+  ListArea,
 } from './styles';
 import Api from '../../Api';
+import BarberItem from '../../components/BarberItem';
 
 import SearchIcon from '../../assets/search.svg';
 import MyLocationIcon from '../../assets/my_location.svg';
@@ -90,6 +92,11 @@ export default () => {
         </LocationArea>
 
         {loading && <LoadingIcon size="large" color="#fff" />}
+        <ListArea>
+          {list.map((item, k) => (
+            <BarberItem key={k} data={item} />
+          ))}
+        </ListArea>
       </Scroller>
     </Container>
   );
