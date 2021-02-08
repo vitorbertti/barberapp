@@ -12,9 +12,17 @@ export const Scroller = styled.ScrollView`
 
 export const FakeSwiper = styled.View``;
 
-export const PageBody = styled.View``;
+export const PageBody = styled.View`
+  background-color: #fff;
+  border-top-left-radius: 50px;
+  margin-top: -50px;
+  min-height: 400px;
+`;
 
-export const UserInfoArea = styled.View``;
+export const UserInfoArea = styled.View`
+  flex-direction: row;
+  margin-top: -30px;
+`;
 
 export const ServiceArea = styled.View``;
 
@@ -44,4 +52,39 @@ export const SwipeItem = styled.View`
 export const SwipeImage = styled.Image`
   width: 100%;
   height: 240px;
+`;
+
+export const UserAvatar = styled.Image`
+  width: 110px;
+  height: 110px;
+  border-radius: 20px;
+  margin-left: 30px;
+  margin-right: 20px;
+  border-width: 4px;
+  border-color: #fff;
+`;
+
+export const UserInfo = styled.View`
+  flex: 1;
+  justify-content: flex-end;
+`;
+
+export const UserInfoName = styled.Text`
+  color: #000;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+`;
+
+export const UserFavButton = styled.TouchableOpacity`
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border: 2px solid #999;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: 20px;
 `;

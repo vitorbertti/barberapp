@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, Text} from 'react-native';
+import {Alert} from 'react-native';
+import Stars from '../../components/Stars';
 import {
   Container,
   Scroller,
@@ -12,9 +13,15 @@ import {
   SwipeDotActive,
   SwipeItem,
   SwipeImage,
+  UserAvatar,
+  UserInfo,
+  UserInfoName,
+  UserFavButton,
 } from './styles';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import Swiper from 'react-native-swiper';
+
+import FavoriteIcon from '../../assets/favorite.svg';
 
 import Api from '../../Api';
 
@@ -66,7 +73,16 @@ export default () => {
           <FakeSwiper />
         )}
         <PageBody>
-          <UserInfoArea />
+          <UserInfoArea>
+            <UserAvatar source={{uri: userInfo.avatar}} />
+            <UserInfo>
+              <UserInfoName>{userInfo.name}</UserInfoName>
+              <Stars stars={userInfo.stars} showNumber={true} />
+            </UserInfo>
+            <UserFavButton>
+              <FavoriteIcon width="24" height="24" fill="#ff0000" />
+            </UserFavButton>
+          </UserInfoArea>
           <ServiceArea />
           <TestimonialArea />
         </PageBody>
