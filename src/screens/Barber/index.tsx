@@ -17,11 +17,13 @@ import {
   UserInfo,
   UserInfoName,
   UserFavButton,
+  BackButton,
 } from './styles';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import Swiper from 'react-native-swiper';
 
 import FavoriteIcon from '../../assets/favorite.svg';
+import BackIcon from '../../assets/back.svg';
 
 import Api from '../../Api';
 
@@ -52,6 +54,10 @@ export default () => {
     };
     getBarberInfo();
   }, [userInfo.id]);
+
+  const handleBackButton = () => {
+    navigation.goBack();
+  };
 
   return (
     <Container>
@@ -87,6 +93,9 @@ export default () => {
           <TestimonialArea />
         </PageBody>
       </Scroller>
+      <BackButton onPress={handleBackButton}>
+        <BackIcon width="44" height="44" fill="#fff" />
+      </BackButton>
     </Container>
   );
 };

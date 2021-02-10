@@ -88,3 +88,10 @@ export const UserFavButton = styled.TouchableOpacity`
   margin-left: 20px;
   margin-top: 20px;
 `;
+
+export const BackButton = styled.TouchableOpacity`
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9;
+`;
