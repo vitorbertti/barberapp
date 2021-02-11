@@ -98,3 +98,7 @@ export const BackButton = styled.TouchableOpacity`
   top: 0;
   z-index: 9;
 `;
+
+export const LoadingIcon = styled.ActivityIndicator`
+  margin-top: 50px;
+`;

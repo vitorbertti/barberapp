@@ -18,6 +18,7 @@ import {
   UserInfoName,
   UserFavButton,
   BackButton,
+  LoadingIcon,
 } from './styles';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import Swiper from 'react-native-swiper';
@@ -26,6 +27,7 @@ import FavoriteIcon from '../../assets/favorite.svg';
 import BackIcon from '../../assets/back.svg';
 
 import Api from '../../Api';
+// import { LoasdingIcon } from '../Home/styles';
 
 export default () => {
   const navigation = useNavigation();
@@ -89,6 +91,9 @@ export default () => {
               <FavoriteIcon width="24" height="24" fill="#ff0000" />
             </UserFavButton>
           </UserInfoArea>
+
+          {loading && <LoadingIcon size="large" color="#000" />}
+
           <ServiceArea />
           <TestimonialArea />
         </PageBody>
