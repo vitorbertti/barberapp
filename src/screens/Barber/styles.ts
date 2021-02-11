@@ -10,7 +10,10 @@ export const Scroller = styled.ScrollView`
   flex: 1;
 `;
 
-export const FakeSwiper = styled.View``;
+export const FakeSwiper = styled.View`
+  height: 240;
+  background-color: #63c2d1;
+`;
 
 export const PageBody = styled.View`
   background-color: #fff;
