@@ -19,6 +19,13 @@ import {
   UserFavButton,
   BackButton,
   LoadingIcon,
+  ServicesTitle,
+  ServiceItem,
+  ServiceInfo,
+  ServiceName,
+  ServicePrice,
+  ServiceChooseButton,
+  ServiceChooseBtnText,
 } from './styles';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import Swiper from 'react-native-swiper';
@@ -94,7 +101,23 @@ export default () => {
 
           {loading && <LoadingIcon size="large" color="#000" />}
 
-          <ServiceArea />
+          {userInfo.services && (
+            <ServiceArea>
+              <ServicesTitle>Lista de serviços</ServicesTitle>
+
+              {userInfo.services.map((item, key) => (
+                <ServiceItem key={key}>
+                  <ServiceInfo>
+                    <ServiceName>{item.name}</ServiceName>
+                    <ServicePrice>R$ {item.price}</ServicePrice>
+                  </ServiceInfo>
+                  <ServiceChooseButton>
+                    <ServiceChooseBtnText>Agendar</ServiceChooseBtnText>
+                  </ServiceChooseButton>
+                </ServiceItem>
+              ))}
+            </ServiceArea>
+          )}
           <TestimonialArea />
         </PageBody>
       </Scroller>
