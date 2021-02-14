@@ -35,6 +35,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import Swiper from 'react-native-swiper';
 
 import FavoriteIcon from '../../assets/favorite.svg';
+import FavoriteFullIcon from '../../assets/favorite_full.svg';
 import BackIcon from '../../assets/back.svg';
 import NavPrevIcon from '../../assets/nav_prev.svg';
 import NavNextIcon from '../../assets/nav_next.svg';
@@ -54,6 +55,7 @@ export default () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [favorited, setFavorited] = useState(false);
 
   useEffect(() => {
     const getBarberInfo = async () => {
@@ -61,6 +63,7 @@ export default () => {
       let json = await Api.getBarber(userInfo.id);
       if (json.error === '') {
         setUserInfo(json.data);
+        setFavorited(json.data.favorited);
       } else {
         Alert.alert('Erro', json.error, [], {cancelable: true});
       }
@@ -72,6 +75,11 @@ export default () => {
 
   const handleBackButton = () => {
     navigation.goBack();
+  };
+
+  const handleFavClick = async () => {
+    setFavorited(!favorited);
+    await Api.setFavorite(userInfo.id);
   };
 
   return (
@@ -100,8 +108,12 @@ export default () => {
               <UserInfoName>{userInfo.name}</UserInfoName>
               <Stars stars={userInfo.stars} showNumber={true} />
             </UserInfo>
-            <UserFavButton>
-              <FavoriteIcon width="24" height="24" fill="#ff0000" />
+            <UserFavButton onPress={handleFavClick}>
+              {favorited ? (
+                <FavoriteFullIcon width="24" height="24" fill="#ff0000" />
+              ) : (
+                <FavoriteIcon width="24" height="24" fill="#ff0000" />
+              )}
             </UserFavButton>
           </UserInfoArea>
 
