@@ -25,6 +25,30 @@ const CloseButton = styled.TouchableOpacity`
   height: 40px;
 `;
 
+const ModalItem = styled.View`
+  background-color: #fff;
+  border-radius: 10px;
+  margin-top: 15px;
+  padding: 10px;
+`;
+
+const UserInfo = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const UserAvatar = styled.Image`
+  height: 56px;
+  width: 56px;
+  border-radius: 20px;
+  margin-right: 15px;
+`;
+
+const UserName = styled.Text`
+  color: #000;
+  font-size: 18px;
+`;
+
 export default ({show, setShow, user, service}) => {
   const navigation = useNavigation();
 
@@ -39,6 +63,13 @@ export default ({show, setShow, user, service}) => {
           <CloseButton onPress={handleCloseButton}>
             <ExpandIcon width="40" height="40" fill="#000" />
           </CloseButton>
+
+          <ModalItem>
+            <UserInfo>
+              <UserAvatar source={{uri: user.avatar}} />
+              <UserName>{user.name}</UserName>
+            </UserInfo>
+          </ModalItem>
         </ModalBody>
       </ModalArea>
     </Modal>
