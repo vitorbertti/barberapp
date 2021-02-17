@@ -47,6 +47,22 @@ const UserAvatar = styled.Image`
 const UserName = styled.Text`
   color: #000;
   font-size: 18px;
+  font-weight: bold;
+`;
+
+const ServiceInfo = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const ServiceName = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+const ServicePrice = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
 `;
 
 export default ({show, setShow, user, service}) => {
@@ -70,6 +86,15 @@ export default ({show, setShow, user, service}) => {
               <UserName>{user.name}</UserName>
             </UserInfo>
           </ModalItem>
+
+          {service != null && (
+            <ModalItem>
+              <ServiceInfo>
+                <ServiceName>{user.services[service].name}</ServiceName>
+                <ServicePrice>R$ {user.services[service].price}</ServicePrice>
+              </ServiceInfo>
+            </ModalItem>
+          )}
         </ModalBody>
       </ModalArea>
     </Modal>
