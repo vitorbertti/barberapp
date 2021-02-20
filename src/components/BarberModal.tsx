@@ -65,12 +65,28 @@ const ServicePrice = styled.Text`
   font-weight: bold;
 `;
 
+const FinishButton = styled.TouchableOpacity`
+  background-color: #268596;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+`;
+
+const FinishButtonText = styled.Text`
+  color: #fff;
+  font-size: 17px;
+  font-weight: bold;
+`;
+
 export default ({show, setShow, user, service}) => {
   const navigation = useNavigation();
 
   const handleCloseButton = () => {
     setShow(false);
   };
+
+  const handleFinishClick = () => {}
 
   return (
     <Modal transparent={true} visible={show} animationType="slide">
@@ -97,6 +113,10 @@ export default ({show, setShow, user, service}) => {
               </ServiceInfo>
             </ModalItem>
           )}
+
+          <FinishButton onPress={handleFinishClick}>
+            <FinishButtonText>Finalizar Agendamento</FinishButtonText>
+          </FinishButton>
         </ModalBody>
       </ModalArea>
     </Modal>
