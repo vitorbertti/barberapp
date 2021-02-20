@@ -3,6 +3,8 @@ import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 
 import ExpandIcon from '../assets/expand.svg';
+import NavPrevIcon from '../assets/nav_prev.svg';
+import NavNextIcon from '../assets/nav_next.svg';
 
 const Modal = styled.Modal``;
 
@@ -79,6 +81,50 @@ const FinishButtonText = styled.Text`
   font-weight: bold;
 `;
 
+const DateInfo = styled.View`
+  flex-direction: row;
+`;
+
+const DatePrevArea = styled.TouchableOpacity`
+  flex: 1;
+  justify-content: flex-end;
+  align-items: flex-end;
+`;
+
+const DateTitleArea = styled.View`
+  width: 140px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const DateTitle = styled.Text`
+  font-size: 17px;
+  font-weight: bold;
+  color: #000;
+`;
+
+const DateNextArea = styled.TouchableOpacity`
+  flex: 1;
+  align-items: flex-start;
+`;
+
+const months = [
+  'Janeiro',
+  'Fevereiro',
+  'Março',
+  'Abril',
+  'Maio',
+  'Junho',
+  'Julho',
+  'Agosto',
+  'Setembro',
+  'Outubro',
+  'Novembro',
+  'Dezembro',
+];
+
+const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
+
 export default ({show, setShow, user, service}) => {
   const navigation = useNavigation();
 
@@ -86,7 +132,7 @@ export default ({show, setShow, user, service}) => {
     setShow(false);
   };
 
-  const handleFinishClick = () => {}
+  const handleFinishClick = () => {};
 
   return (
     <Modal transparent={true} visible={show} animationType="slide">
@@ -113,6 +159,20 @@ export default ({show, setShow, user, service}) => {
               </ServiceInfo>
             </ModalItem>
           )}
+
+          <ModalItem>
+            <DateInfo>
+              <DatePrevArea>
+                <NavPrevIcon width="35" height="35" fill="#000" />
+              </DatePrevArea>
+              <DateTitleArea>
+                <DateTitle>Fevereiro 2021</DateTitle>
+              </DateTitleArea>
+              <DateNextArea>
+                <NavNextIcon width="35" height="35" fill="#000" />
+              </DateNextArea>
+            </DateInfo>
+          </ModalItem>
 
           <FinishButton onPress={handleFinishClick}>
             <FinishButtonText>Finalizar Agendamento</FinishButtonText>
