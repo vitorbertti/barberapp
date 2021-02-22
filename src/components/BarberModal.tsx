@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -128,11 +128,42 @@ const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
 export default ({show, setShow, user, service}) => {
   const navigation = useNavigation();
 
+  const [selectedYear, setSelectedYear] = useState(0);
+  const [selectedMonth, setSelectedMonth] = useState(0);
+  const [selectedDay, setSelectedDay] = useState(0);
+  const [selectedHour, setSelectedHour] = useState(null);
+  const [listDays, setListDays] = useState([]);
+  const [listHours, setListHours] = useState([]);
+
+  useEffect(() => {
+    let today = new Date();
+    setSelectedYear(today.getFullYear());
+    setSelectedMonth(today.getMonth());
+    setSelectedDay(today.getDate());
+  }),
+    [];
+
   const handleCloseButton = () => {
     setShow(false);
   };
 
   const handleFinishClick = () => {};
+
+  const handleLeftDateClick = () => {
+    let mountDate = new Date(selectedYear, selectedMonth, 1);
+    mountDate.setMonth(mountDate.getMonth() - 1);
+    setSelectedYear(mountDate.getFullYear());
+    setSelectedMonth(mountDate.getMonth());
+    setSelectedDay(1);
+  };
+
+  const handleRightDateClick = () => {
+    let mountDate = new Date(selectedYear, selectedMonth, 1);
+    mountDate.setMonth(mountDate.getMonth() + 1);
+    setSelectedYear(mountDate.getFullYear());
+    setSelectedMonth(mountDate.getMonth());
+    setSelectedDay(1);
+  };
 
   return (
     <Modal transparent={true} visible={show} animationType="slide">
@@ -162,13 +193,15 @@ export default ({show, setShow, user, service}) => {
 
           <ModalItem>
             <DateInfo>
-              <DatePrevArea>
+              <DatePrevArea onPress={handleLeftDateClick}>
                 <NavPrevIcon width="35" height="35" fill="#000" />
               </DatePrevArea>
               <DateTitleArea>
-                <DateTitle>Fevereiro 2021</DateTitle>
+                <DateTitle>
+                  {months[selectedMonth]} {selectedYear}
+                </DateTitle>
               </DateTitleArea>
-              <DateNextArea>
+              <DateNextArea onPress={handleRightDateClick}>
                 <NavNextIcon width="35" height="35" fill="#000" />
               </DateNextArea>
             </DateInfo>
