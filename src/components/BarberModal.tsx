@@ -5,6 +5,9 @@ import {useNavigation} from '@react-navigation/native';
 import ExpandIcon from '../assets/expand.svg';
 import NavPrevIcon from '../assets/nav_prev.svg';
 import NavNextIcon from '../assets/nav_next.svg';
+import {Alert} from 'react-native';
+
+import Api from '../Api';
 
 const Modal = styled.Modal``;
 
@@ -231,7 +234,34 @@ export default ({show, setShow, user, service}) => {
     setShow(false);
   };
 
-  const handleFinishClick = () => {};
+  const handleFinishClick = async () => {
+    if (
+      user.id &&
+      service !== null &&
+      selectedYear > 0 &&
+      selectedMonth > 0 &&
+      selectedDay > 0 &&
+      selectedHour !== null
+    ) {
+      let response = await Api.setAppointment(
+        user.id,
+        service,
+        selectedYear,
+        selectedMonth,
+        selectedDay,
+        selectedHour,
+      );
+
+      if (response.error === '') {
+        setShow(false);
+        navigation.navigate('Appointments');
+      } else {
+        Alert.alert('Erro', response.error, [], {cancelable: true});
+      }
+    } else {
+      Alert.alert('Alerta', 'Preencha todos os dados', [], {cancelable: true});
+    }
+  };
 
   const handleLeftDateClick = () => {
     let mountDate = new Date(selectedYear, selectedMonth, 1);
